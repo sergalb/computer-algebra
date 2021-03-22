@@ -24,6 +24,18 @@ class DixonTests {
     }
 
     @Test
+    fun `composite number from three primes`() {
+        val res = factorize(141 * 223 * 16127L)
+        Assertions.assertTrue(shouldFactorized(141 * 223 * 16127L, res))
+    }
+
+    @Test
+    fun `16769021 should factorize`() {
+        val res = factorize(16769021)
+        Assertions.assertTrue(shouldFactorized(16769021, res))
+    }
+
+    @Test
     fun `prime shouldn't be factorized`() {
         val res = factorize(17)
         Assertions.assertNull(res)

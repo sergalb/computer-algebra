@@ -1,11 +1,8 @@
 import kotlin.math.*
-import kotlin.random.Random
 import kotlin.random.Random.Default.nextLong
-import kotlin.system.measureTimeMillis
-
 
 fun generatePrimes(n: Long): List<Long> {
-    val prime = Array(n.toInt() + 1) { true };
+    val prime = Array(n.toInt() + 1) { true }
     var p = 2
     while (p * p <= n) {
         if (prime[p]) {
@@ -17,7 +14,7 @@ fun generatePrimes(n: Long): List<Long> {
         }
         p++
     }
-    return (2 .. n).filter { prime[it.toInt()] }
+    return (2..n).filter { prime[it.toInt()] }
 }
 
 fun generateBSmooth(
@@ -26,7 +23,7 @@ fun generateBSmooth(
     primes: List<Long>
 ): Triple<MutableList<Long>, Array<Array<Int>>, Array<Array<Long>>> {
     val bSmooth: MutableList<Long> = ArrayList(h + 1)
-    val alphas = Array(h + 1) { Array(primes.size) { 0 } }
+    val alphas = Array(h + 1) { Array(h) { 0 } }
     val epsilons = Array(h + 1) { Array(primes.size) { 0L } }
     var countBSmooth = 0
     while (countBSmooth < h + 1) {
@@ -76,7 +73,7 @@ fun factorize(n: Long): Long? {
         try {
             val solutionAttempt = matrix.conjugateGradientMethod()
             if (solutionAttempt.isPresent) {
-                val x = solutionAttempt.get()
+                val x = solutionAttempt.get().map { it % 2 }
                 var left = (1L).toBigInteger()
                 val gamma = Array(primes.size) { 0 }
                 for (i in x.indices) {
@@ -102,14 +99,12 @@ fun factorize(n: Long): Long? {
                     } else {
                         factor = subGcd
                     }
-//                println("factor: ${left + right}, gcd: $sumGcd")
-//                println("factor: ${abs(left - right)}, gcd: $subGcd")
                     break
                 }
             }
         } catch (ignore: RuntimeException) {
         }
-        println("attempt $attempt for factorizing failed")
+        println("attempt ${attempt + 1} for factorizing failed")
 
     }
     return factor

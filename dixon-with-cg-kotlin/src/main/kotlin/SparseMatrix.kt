@@ -101,7 +101,7 @@ class SparseMatrix(val base: Long, var m: Int, var n: Int) {
 
     fun scalarMultiply(c: Long): SparseMatrix {
         val res = SparseMatrix(this)
-        res.data.values.forEach { it.values.map { inner -> (inner * c + base) % base } }
+        res.data.values.forEach { it.values.map { value -> (value * c + base) % base } }
         return res
     }
 
